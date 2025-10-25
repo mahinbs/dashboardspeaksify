@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   LineChart,
@@ -17,12 +17,13 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { CreditCard, DollarSign, Users, TrendingUp, Download, Filter } from "lucide-react";
+import { CreditCard, DollarSign, Users, TrendingUp, Download, Filter, LogOut } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import Login from "@/components/Login";
 
 // --- Enhanced Mock Data ---
 const months = [
@@ -148,14 +149,59 @@ const transactionsBase = Array.from({ length: 50 }, (_, i) => {
   ];
   const countryFlags = ["🇺🇸", "🇬🇧", "🇨🇦", "🇩🇪", "🇦🇺", "🇫🇷", "🇳🇱", "🇯🇵", "🇸🇬", "🇸🇪"];
   
+  // Customer names for different industries
+  const customerNames = [
+    // Technology & Software
+    "Alex Thompson", "Sarah Chen", "Michael Rodriguez", "Emma Wilson", "David Kim",
+    "Lisa Zhang", "James Anderson", "Maria Garcia", "Robert Taylor", "Jennifer Lee",
+    
+    // Healthcare & Medical
+    "Dr. Sarah Johnson", "Dr. Michael Brown", "Dr. Emily Davis", "Dr. James Wilson", "Dr. Lisa Martinez",
+    "Dr. Robert Anderson", "Dr. Jennifer Taylor", "Dr. David Garcia", "Dr. Maria Rodriguez", "Dr. Alex Thompson",
+    
+    // Financial Services
+    "John Smith", "Sarah Williams", "Michael Jones", "Emily Brown", "David Miller",
+    "Lisa Davis", "James Garcia", "Maria Rodriguez", "Robert Martinez", "Jennifer Anderson",
+    
+    // Education & Training
+    "Prof. Sarah Johnson", "Prof. Michael Brown", "Prof. Emily Davis", "Prof. James Wilson", "Prof. Lisa Martinez",
+    "Dr. Robert Anderson", "Dr. Jennifer Taylor", "Dr. David Garcia", "Dr. Maria Rodriguez", "Dr. Alex Thompson",
+    
+    // Retail & E-commerce
+    "Alex Thompson", "Sarah Chen", "Michael Rodriguez", "Emma Wilson", "David Kim",
+    "Lisa Zhang", "James Anderson", "Maria Garcia", "Robert Taylor", "Jennifer Lee",
+    
+    // Manufacturing & Industrial
+    "John Smith", "Sarah Williams", "Michael Jones", "Emily Brown", "David Miller",
+    "Lisa Davis", "James Garcia", "Maria Rodriguez", "Robert Martinez", "Jennifer Anderson",
+    
+    // Consulting & Professional Services
+    "Alex Thompson", "Sarah Chen", "Michael Rodriguez", "Emma Wilson", "David Kim",
+    "Lisa Zhang", "James Anderson", "Maria Garcia", "Robert Taylor", "Jennifer Lee",
+    
+    // Real Estate & Construction
+    "John Smith", "Sarah Williams", "Michael Jones", "Emily Brown", "David Miller",
+    "Lisa Davis", "James Garcia", "Maria Rodriguez", "Robert Martinez", "Jennifer Anderson",
+    
+    // Media & Entertainment
+    "Alex Thompson", "Sarah Chen", "Michael Rodriguez", "Emma Wilson", "David Kim",
+    "Lisa Zhang", "James Anderson", "Maria Garcia", "Robert Taylor", "Jennifer Lee",
+    
+    // Transportation & Logistics
+    "John Smith", "Sarah Williams", "Michael Jones", "Emily Brown", "David Miller",
+    "Lisa Davis", "James Garcia", "Maria Rodriguez", "Robert Martinez", "Jennifer Anderson"
+  ];
+  
   const planIndex = i % 5;
   const statusIndex = i % 9;
   const methodIndex = i % 6;
   const countryIndex = i % 10;
+  const customerNameIndex = i % customerNames.length;
   
   return {
     id: `TXN-${2025000 + i}`,
     customer: companies[i % companies.length],
+    customerName: customerNames[customerNameIndex],
     plan: plans[planIndex],
     amount: planAmounts[planIndex],
     status: statuses[statusIndex],
@@ -209,9 +255,75 @@ function downloadCSV(rows, filename = "export.csv") {
 }
 
 export default function SpeaksifyPaymentsDashboard() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [range, setRange] = useState("12m");
   const [search, setSearch] = useState("");
   const [planFilter, setPlanFilter] = useState("all");
+
+  // Check authentication on component mount
+  useEffect(() => {
+    const checkAuth = () => {
+      const authStatus = sessionStorage.getItem('speaksify_authenticated');
+      const user = sessionStorage.getItem('speaksify_user');
+      const loginTime = sessionStorage.getItem('speaksify_login_time');
+      
+      if (authStatus === 'true' && user === 'admin@speaksify.com' && loginTime) {
+        const now = Date.now();
+        const sessionTimeout = 24 * 60 * 60 * 1000; // 24 hours
+        if ((now - parseInt(loginTime)) < sessionTimeout) {
+          setIsAuthenticated(true);
+        } else {
+          // Session expired, clear data
+          sessionStorage.removeItem('speaksify_authenticated');
+          sessionStorage.removeItem('speaksify_user');
+          sessionStorage.removeItem('speaksify_login_time');
+          setIsAuthenticated(false);
+        }
+      } else {
+        setIsAuthenticated(false);
+      }
+      setIsLoading(false);
+    };
+
+    checkAuth();
+  }, []);
+
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+    setIsLoading(false);
+  };
+
+  const handleLogout = () => {
+    // Clear all session data
+    sessionStorage.removeItem('speaksify_authenticated');
+    sessionStorage.removeItem('speaksify_user');
+    sessionStorage.removeItem('speaksify_login_time');
+    setIsAuthenticated(false);
+  };
+
+  // Show loading state while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen w-full bg-gradient-to-br from-slate-50 via-white to-blue-50/30 flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center"
+        >
+          <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 grid place-items-center text-white font-bold text-2xl shadow-lg mx-auto mb-4">
+            S
+          </div>
+          <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="text-slate-600 mt-4">Loading dashboard...</p>
+        </motion.div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Login onLogin={handleLogin} />;
+  }
 
   // Filtered trend by range
   const revenueTrend = useMemo(() => {
@@ -231,6 +343,7 @@ export default function SpeaksifyPaymentsDashboard() {
     if (planFilter !== "all") list = list.filter((t) => t.plan.toLowerCase() === planFilter);
     if (search) list = list.filter((t) =>
       t.customer.toLowerCase().includes(search.toLowerCase()) ||
+      t.customerName.toLowerCase().includes(search.toLowerCase()) ||
       t.id.toLowerCase().includes(search.toLowerCase()) ||
       t.salesRep.toLowerCase().includes(search.toLowerCase())
     );
@@ -272,6 +385,9 @@ export default function SpeaksifyPaymentsDashboard() {
               <p className="text-sm text-slate-600 -mt-1 flex items-center gap-2">
                 <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
                 AI voice agent SaaS · Real-time revenue insights
+                <span className="ml-4 px-2 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full">
+                  admin@speaksify.com
+                </span>
               </p>
             </div>
           </div>
@@ -282,6 +398,13 @@ export default function SpeaksifyPaymentsDashboard() {
               onClick={() => downloadCSV(transactions, "transactions.csv")}
             >
               <Download className="h-4 w-4" /> Export CSV
+            </Button>
+            <Button 
+              variant="outline" 
+              className="gap-2 bg-white hover:bg-red-50 border-slate-200 hover:border-red-300 shadow-sm text-red-600 hover:text-red-700" 
+              onClick={handleLogout}
+            >
+              <LogOut className="h-4 w-4" /> Logout
             </Button>
           </div>
         </div>
@@ -724,7 +847,7 @@ export default function SpeaksifyPaymentsDashboard() {
                   </div>
                 </div>
                 <Input 
-                  placeholder="Search transactions..." 
+                  placeholder="Search by company, customer, ID, or sales rep..." 
                   className="w-64 bg-white border-slate-200 focus:border-blue-300 focus:ring-blue-200" 
                   value={search} 
                   onChange={(e) => setSearch(e.target.value)} 
@@ -745,6 +868,7 @@ export default function SpeaksifyPaymentsDashboard() {
                 <thead>
                   <tr className="text-left bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200">
                     <Th className="font-semibold text-slate-700">Transaction ID</Th>
+                    <Th className="font-semibold text-slate-700">Company</Th>
                     <Th className="font-semibold text-slate-700">Customer</Th>
                     <Th className="font-semibold text-slate-700">Plan</Th>
                     <Th className="font-semibold text-slate-700">Amount</Th>
@@ -766,6 +890,7 @@ export default function SpeaksifyPaymentsDashboard() {
                     >
                       <Td className="font-medium text-slate-900">{t.id}</Td>
                       <Td className="font-medium text-slate-800">{t.customer}</Td>
+                      <Td className="text-slate-700 font-medium">{t.customerName}</Td>
                       <Td>
                         <span className={`px-3 py-1 rounded-full text-xs font-medium border ${
                           t.plan === "Starter" ? "bg-blue-50 text-blue-700 border-blue-200" :
