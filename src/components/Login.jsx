@@ -86,7 +86,7 @@ export default function Login({ onLogin }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-md"
+        className="w-full max-w-sm sm:max-w-md"
       >
         <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
           <CardHeader className="text-center pb-6">
@@ -100,10 +100,10 @@ export default function Login({ onLogin }) {
                 S
               </div>
             </motion.div>
-            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+            <CardTitle className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
               Speaksify Dashboard
             </CardTitle>
-            <p className="text-sm text-slate-600 mt-2">
+            <p className="text-xs sm:text-sm text-slate-600 mt-2">
               Sign in to access your payments analytics
             </p>
           </CardHeader>

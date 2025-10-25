@@ -336,43 +336,49 @@ export default function SpeaksifyPaymentsDashboard() {
         transition={{ duration: 0.6 }}
         className="sticky top-0 z-20 backdrop-blur-md bg-white/80 border-b border-slate-200/50 shadow-sm"
       >
-        <div className="mx-auto max-w-7xl px-4 py-6 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <motion.div 
-              className="h-12 w-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 grid place-items-center text-white font-bold shadow-lg"
-              whileHover={{ scale: 1.05, rotate: 5 }}
-              transition={{ duration: 0.2 }}
-            >
-              S
-            </motion.div>
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold leading-tight bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-                Speaksify Payments Dashboard
-              </h1>
-              <p className="text-sm text-slate-600 -mt-1 flex items-center gap-2">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                AI voice agent SaaS · Real-time revenue insights
-                <span className="ml-4 px-2 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full">
-                  admin@speaksify.com
-                </span>
-              </p>
+        <div className="mx-auto max-w-7xl px-4 py-4 sm:py-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
+              <motion.div 
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 grid place-items-center text-white font-bold text-lg sm:text-xl shadow-lg flex-shrink-0"
+                whileHover={{ scale: 1.05, rotate: 5 }}
+                transition={{ duration: 0.2 }}
+              >
+                S
+              </motion.div>
+              <div className="min-w-0 flex-1">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold leading-tight bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                  Speaksify Payments Dashboard
+                </h1>
+                <p className="text-xs sm:text-sm text-slate-600 -mt-1 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                  <span className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                    AI voice agent SaaS · Real-time revenue insights
+                  </span>
+                  <span className="px-2 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full self-start">
+                    admin@speaksify.com
+                  </span>
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <Button 
-              variant="outline" 
-              className="gap-2 bg-white hover:bg-blue-50 border-slate-200 hover:border-blue-300 shadow-sm" 
-              onClick={() => downloadCSV(transactions, "transactions.csv")}
-            >
-              <Download className="h-4 w-4" /> Export CSV
-            </Button>
-            <Button 
-              variant="outline" 
-              className="gap-2 bg-white hover:bg-red-50 border-slate-200 hover:border-red-300 shadow-sm text-red-600 hover:text-red-700" 
-              onClick={handleLogout}
-            >
-              <LogOut className="h-4 w-4" /> Logout
-            </Button>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="gap-2 bg-white hover:bg-blue-50 border-slate-200 hover:border-blue-300 shadow-sm text-xs sm:text-sm" 
+                onClick={() => downloadCSV(transactions, "transactions.csv")}
+              >
+                <Download className="h-3 w-3 sm:h-4 sm:w-4" /> Export CSV
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="gap-2 bg-white hover:bg-red-50 border-slate-200 hover:border-red-300 shadow-sm text-red-600 hover:text-red-700 text-xs sm:text-sm" 
+                onClick={handleLogout}
+              >
+                <LogOut className="h-3 w-3 sm:h-4 sm:w-4" /> Logout
+              </Button>
+            </div>
           </div>
         </div>
       </motion.header>
@@ -381,18 +387,17 @@ export default function SpeaksifyPaymentsDashboard() {
       <div className="mx-auto max-w-7xl px-4 py-6">
         <Card className="shadow-lg border-0 bg-gradient-to-r from-white to-slate-50/50">
           <CardContent className="p-6">
-            <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
-              <div className="flex items-center gap-3">
-                <Badge variant="secondary" className="px-4 py-2 bg-emerald-50 text-emerald-700 border-emerald-200 font-medium">
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+                <Badge variant="secondary" className="px-3 py-1.5 sm:px-4 sm:py-2 bg-emerald-50 text-emerald-700 border-emerald-200 font-medium text-xs sm:text-sm">
                   <div className="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></div>
                   Live Data
                 </Badge>
-                <div className="text-sm text-slate-600 font-medium">Updated just now</div>
+                <div className="text-xs sm:text-sm text-slate-600 font-medium">Updated just now</div>
               </div>
-              <div className="flex-1" />
-              <div className="flex items-center gap-4">
-                <div className="text-sm text-slate-700 font-medium">Time Range:</div>
-                <div className="flex rounded-xl border border-slate-200 overflow-hidden bg-white shadow-sm">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+                <div className="text-xs sm:text-sm text-slate-700 font-medium">Time Range:</div>
+                <div className="flex rounded-xl border border-slate-200 overflow-hidden bg-white shadow-sm w-full sm:w-auto">
                   {[
                     { v: "3m", label: "3M" },
                     { v: "6m", label: "6M" },
@@ -401,7 +406,7 @@ export default function SpeaksifyPaymentsDashboard() {
                     <button
                       key={r.v}
                       onClick={() => setRange(r.v)}
-                      className={`px-4 py-2 text-sm font-medium transition-all duration-200 hover:bg-slate-50 ${
+                      className={`flex-1 sm:flex-none px-3 py-2 text-xs sm:text-sm font-medium transition-all duration-200 hover:bg-slate-50 ${
                         range === r.v 
                           ? "bg-blue-50 text-blue-700 border-blue-200" 
                           : "text-slate-600 hover:text-slate-800"
@@ -411,7 +416,7 @@ export default function SpeaksifyPaymentsDashboard() {
                     </button>
                   ))}
                 </div>
-                <div className="hidden md:flex items-center gap-2 text-slate-600">
+                <div className="hidden sm:flex items-center gap-2 text-slate-600">
                   <Filter className="w-4 h-4" />
                   <span className="text-sm font-medium">Filters</span>
                 </div>
@@ -455,16 +460,16 @@ export default function SpeaksifyPaymentsDashboard() {
       </div>
 
       {/* Enhanced Charts Section */}
-      <div className="mx-auto max-w-7xl px-4 mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="mx-auto max-w-7xl px-4 mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Revenue Trend - Enhanced */}
         <Card className="lg:col-span-2 shadow-lg border-0 bg-gradient-to-br from-white to-blue-50/30">
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-semibold text-slate-800 flex items-center gap-2">
+            <CardTitle className="text-base sm:text-lg font-semibold text-slate-800 flex items-center gap-2">
               <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
               Revenue Trend Analysis
             </CardTitle>
           </CardHeader>
-          <CardContent className="h-80">
+          <CardContent className="h-64 sm:h-80">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={revenueTrend} margin={{ left: 0, right: 10 }}>
                 <defs>
@@ -655,27 +660,50 @@ export default function SpeaksifyPaymentsDashboard() {
         {/* Country Revenue Chart */}
         <Card className="shadow-lg border-0 bg-gradient-to-br from-white to-indigo-50/30">
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-semibold text-slate-800 flex items-center gap-2">
+            <CardTitle className="text-base sm:text-lg font-semibold text-slate-800 flex items-center gap-2">
               <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
               Country-wise Revenue Distribution
             </CardTitle>
           </CardHeader>
-          <CardContent className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={countryRevenue.slice(0, 8)} layout="horizontal" margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+          <CardContent className="h-64 sm:h-80">
+            <ResponsiveContainer width="100%" height="100%" style={{ pointerEvents: 'auto' }}>
+              <BarChart 
+                data={countryRevenue.slice(0, 8)} 
+                layout="horizontal" 
+                margin={{ top: 20, right: 30, left: 80, bottom: 5 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e2e8f0" />
-                <XAxis type="number" tickFormatter={(v) => `$${(v/1000).toFixed(0)}k`} tick={{ fontSize: 11 }} />
-                <YAxis dataKey="country" type="category" tick={{ fontSize: 11 }} />
+                <XAxis 
+                  type="number" 
+                  tickFormatter={(v) => `$${(v/1000).toFixed(0)}k`} 
+                  tick={{ fontSize: 11 }} 
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <YAxis 
+                  dataKey="country" 
+                  type="category" 
+                  tick={{ fontSize: 11 }} 
+                  axisLine={false}
+                  tickLine={false}
+                  width={70}
+                />
                 <Tooltip 
-                  formatter={(v, name) => [formatCurrency(v), name]}
+                  formatter={(v, name) => [formatCurrency(v), 'Revenue']}
+                  labelFormatter={(label) => `Country: ${label}`}
                   contentStyle={{ 
                     backgroundColor: 'white', 
                     border: '1px solid #e5e7eb',
                     borderRadius: '8px',
                     boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
                   }}
+                  cursor={false}
                 />
-                <Bar dataKey="revenue" radius={[0,8,8,0]}>
+                <Bar 
+                  dataKey="revenue" 
+                  radius={[0,8,8,0]}
+                  fill="#2563eb"
+                >
                   {countryRevenue.slice(0, 8).map((_, idx) => (
                     <Cell key={idx} fill={COLORS[idx % COLORS.length]} />
                   ))}
@@ -688,16 +716,17 @@ export default function SpeaksifyPaymentsDashboard() {
         {/* Country Revenue Pie Chart */}
         <Card className="shadow-lg border-0 bg-gradient-to-br from-white to-teal-50/30">
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-semibold text-slate-800 flex items-center gap-2">
+            <CardTitle className="text-base sm:text-lg font-semibold text-slate-800 flex items-center gap-2">
               <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
               Revenue by Country (Top 8)
             </CardTitle>
           </CardHeader>
-          <CardContent className="h-80">
+          <CardContent className="h-64 sm:h-80">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Tooltip 
-                  formatter={(value, name) => [formatCurrency(value), name]}
+                  formatter={(value, name) => [formatCurrency(value), 'Revenue']}
+                  labelFormatter={(label) => `Country: ${label}`}
                   contentStyle={{ 
                     backgroundColor: 'white', 
                     border: '1px solid #e5e7eb',
@@ -705,13 +734,17 @@ export default function SpeaksifyPaymentsDashboard() {
                     boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
                   }}
                 />
-                <Legend />
+                <Legend 
+                  verticalAlign="bottom" 
+                  height={36}
+                  iconType="circle"
+                />
                 <Pie 
                   data={countryRevenue.slice(0, 8)} 
                   dataKey="revenue" 
                   nameKey="country" 
-                  innerRadius={60} 
-                  outerRadius={100} 
+                  innerRadius={50} 
+                  outerRadius={90} 
                   paddingAngle={5}
                   stroke="white"
                   strokeWidth={2}
@@ -793,39 +826,42 @@ export default function SpeaksifyPaymentsDashboard() {
       <div className="mx-auto max-w-7xl px-4 mt-8">
         <Card className="shadow-lg border-0 bg-gradient-to-br from-white to-slate-50/30">
           <CardHeader className="pb-4">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-xl font-semibold text-slate-800 flex items-center gap-2">
+            <div className="flex flex-col gap-4">
+              <CardTitle className="text-lg sm:text-xl font-semibold text-slate-800 flex items-center gap-2">
                 <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
                 Transaction Analytics
               </CardTitle>
-              <div className="flex items-center gap-3">
-                <div className="hidden md:flex items-center gap-2 text-sm text-slate-600">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <div className="flex items-center gap-2 text-sm text-slate-600">
                   <span className="font-medium">Plan Filter:</span>
-                  <div className="flex rounded-xl border overflow-hidden bg-white">
+                  <div className="flex rounded-xl border overflow-hidden bg-white flex-1 sm:flex-none">
                     {[{v:"all", label:"All"}, {v:"starter", label:"Starter"}, {v:"growth", label:"Growth"}, {v:"pro", label:"Pro"}, {v:"enterprise", label:"Enterprise"}, {v:"custom", label:"Custom"}].map(o => (
                       <button 
                         key={o.v} 
                         onClick={() => setPlanFilter(o.v)} 
-                        className={`px-3 py-1.5 text-sm hover:bg-slate-50 transition-colors ${planFilter===o.v?"bg-blue-50 text-blue-700 font-medium border-blue-200":"text-slate-600"}`}
+                        className={`flex-1 sm:flex-none px-2 py-1.5 text-xs sm:text-sm hover:bg-slate-50 transition-colors ${planFilter===o.v?"bg-blue-50 text-blue-700 font-medium border-blue-200":"text-slate-600"}`}
                       >
                         {o.label}
                       </button>
                     ))}
                   </div>
                 </div>
-                <Input 
-                  placeholder="Search by company, customer, ID, or sales rep..." 
-                  className="w-64 bg-white border-slate-200 focus:border-blue-300 focus:ring-blue-200" 
-                  value={search} 
-                  onChange={(e) => setSearch(e.target.value)} 
-                />
-                <Button 
-                  variant="outline" 
-                  className="gap-2 bg-white hover:bg-blue-50 border-slate-200 hover:border-blue-300" 
-                  onClick={() => downloadCSV(transactions, "filtered-transactions.csv")}
-                >
-                  <Download className="h-4 w-4" /> Export CSV
-                </Button>
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                  <Input 
+                    placeholder="Search transactions..." 
+                    className="w-full sm:w-64 bg-white border-slate-200 focus:border-blue-300 focus:ring-blue-200 text-sm" 
+                    value={search} 
+                    onChange={(e) => setSearch(e.target.value)} 
+                  />
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="gap-2 bg-white hover:bg-blue-50 border-slate-200 hover:border-blue-300 text-xs sm:text-sm" 
+                    onClick={() => downloadCSV(transactions, "filtered-transactions.csv")}
+                  >
+                    <Download className="h-3 w-3 sm:h-4 sm:w-4" /> Export CSV
+                  </Button>
+                </div>
               </div>
             </div>
           </CardHeader>
@@ -834,16 +870,16 @@ export default function SpeaksifyPaymentsDashboard() {
               <table className="min-w-full text-sm">
                 <thead>
                   <tr className="text-left bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200">
-                    <Th className="font-semibold text-slate-700">Transaction ID</Th>
-                    <Th className="font-semibold text-slate-700">Company</Th>
-                    <Th className="font-semibold text-slate-700">Customer</Th>
-                    <Th className="font-semibold text-slate-700">Plan</Th>
-                    <Th className="font-semibold text-slate-700">Amount</Th>
-                    <Th className="font-semibold text-slate-700">Status</Th>
-                    <Th className="font-semibold text-slate-700">Method</Th>
-                    <Th className="font-semibold text-slate-700">Country</Th>
-                    <Th className="font-semibold text-slate-700">Sales Rep</Th>
-                    <Th className="font-semibold text-slate-700">Date</Th>
+                    <Th className="font-semibold text-slate-700 text-xs sm:text-sm">ID</Th>
+                    <Th className="font-semibold text-slate-700 text-xs sm:text-sm hidden sm:table-cell">Company</Th>
+                    <Th className="font-semibold text-slate-700 text-xs sm:text-sm hidden md:table-cell">Customer</Th>
+                    <Th className="font-semibold text-slate-700 text-xs sm:text-sm">Plan</Th>
+                    <Th className="font-semibold text-slate-700 text-xs sm:text-sm">Amount</Th>
+                    <Th className="font-semibold text-slate-700 text-xs sm:text-sm">Status</Th>
+                    <Th className="font-semibold text-slate-700 text-xs sm:text-sm hidden lg:table-cell">Method</Th>
+                    <Th className="font-semibold text-slate-700 text-xs sm:text-sm hidden lg:table-cell">Country</Th>
+                    <Th className="font-semibold text-slate-700 text-xs sm:text-sm hidden xl:table-cell">Sales Rep</Th>
+                    <Th className="font-semibold text-slate-700 text-xs sm:text-sm hidden md:table-cell">Date</Th>
                   </tr>
                 </thead>
                 <tbody>
@@ -855,11 +891,11 @@ export default function SpeaksifyPaymentsDashboard() {
                       transition={{ duration: 0.2, delay: i * 0.02 }}
                       className={`${i % 2 ? "bg-white" : "bg-slate-50/30"} hover:bg-blue-50/50 transition-colors border-b border-slate-100`}
                     >
-                      <Td className="font-medium text-slate-900">{t.id}</Td>
-                      <Td className="font-medium text-slate-800">{t.customer}</Td>
-                      <Td className="text-slate-700 font-medium">{t.customerName}</Td>
+                      <Td className="font-medium text-slate-900 text-xs sm:text-sm">{t.id}</Td>
+                      <Td className="font-medium text-slate-800 text-xs sm:text-sm hidden sm:table-cell">{t.customer}</Td>
+                      <Td className="text-slate-700 font-medium text-xs sm:text-sm hidden md:table-cell">{t.customerName}</Td>
                       <Td>
-                        <span className={`px-3 py-1 rounded-full text-xs font-medium border ${
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium border ${
                           t.plan === "Starter" ? "bg-blue-50 text-blue-700 border-blue-200" :
                           t.plan === "Growth" ? "bg-emerald-50 text-emerald-700 border-emerald-200" :
                           t.plan === "Pro" ? "bg-purple-50 text-purple-700 border-purple-200" :
@@ -869,9 +905,9 @@ export default function SpeaksifyPaymentsDashboard() {
                           {t.plan}
                         </span>
                       </Td>
-                      <Td className="font-semibold text-slate-900">{formatCurrency(t.amount)}</Td>
+                      <Td className="font-semibold text-slate-900 text-xs sm:text-sm">{formatCurrency(t.amount)}</Td>
                       <Td>
-                        <span className={`px-3 py-1 rounded-full text-xs font-medium border ${
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium border ${
                           t.status === "Paid" ? "bg-emerald-50 text-emerald-700 border-emerald-200" : 
                           t.status === "Pending" ? "bg-amber-50 text-amber-700 border-amber-200" :
                           "bg-rose-50 text-rose-700 border-rose-200"
@@ -879,13 +915,13 @@ export default function SpeaksifyPaymentsDashboard() {
                           {t.status}
                         </span>
                       </Td>
-                      <Td className="text-slate-600">{t.method}</Td>
-                      <Td className="text-slate-600 flex items-center gap-1">
+                      <Td className="text-slate-600 text-xs sm:text-sm hidden lg:table-cell">{t.method}</Td>
+                      <Td className="text-slate-600 flex items-center gap-1 text-xs sm:text-sm hidden lg:table-cell">
                         <span className="text-sm">{t.countryFlag}</span>
                         {t.country}
                       </Td>
-                      <Td className="text-slate-600">{t.salesRep}</Td>
-                      <Td className="tabular-nums text-slate-500">{t.date}</Td>
+                      <Td className="text-slate-600 text-xs sm:text-sm hidden xl:table-cell">{t.salesRep}</Td>
+                      <Td className="tabular-nums text-slate-500 text-xs sm:text-sm hidden md:table-cell">{t.date}</Td>
                     </motion.tr>
                   ))}
                 </tbody>

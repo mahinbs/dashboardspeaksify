@@ -57,3 +57,20 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Fix for chart hover issues */
+.recharts-wrapper {
+  pointer-events: auto !important;
+}
+
+.recharts-cartesian-axis-tick {
+  pointer-events: none !important;
+}
+
+.recharts-tooltip-wrapper {
+  pointer-events: none !important;
+}
+
+.recharts-bar-rectangle {
+  pointer-events: auto !important;
+}
