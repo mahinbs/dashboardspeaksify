@@ -255,43 +255,26 @@ function downloadCSV(rows, filename = "export.csv") {
 }
 
 export default function SpeaksifyPaymentsDashboard() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    // Check authentication on initial state
+    const authStatus = sessionStorage.getItem('speaksify_authenticated');
+    const user = sessionStorage.getItem('speaksify_user');
+    const loginTime = sessionStorage.getItem('speaksify_login_time');
+    
+    if (authStatus === 'true' && user === 'admin@speaksify.com' && loginTime) {
+      const now = Date.now();
+      const sessionTimeout = 24 * 60 * 60 * 1000; // 24 hours
+      return (now - parseInt(loginTime)) < sessionTimeout;
+    }
+    return false;
+  });
   const [range, setRange] = useState("12m");
   const [search, setSearch] = useState("");
   const [planFilter, setPlanFilter] = useState("all");
 
-  // Check authentication on component mount
-  useEffect(() => {
-    const checkAuth = () => {
-      const authStatus = sessionStorage.getItem('speaksify_authenticated');
-      const user = sessionStorage.getItem('speaksify_user');
-      const loginTime = sessionStorage.getItem('speaksify_login_time');
-      
-      if (authStatus === 'true' && user === 'admin@speaksify.com' && loginTime) {
-        const now = Date.now();
-        const sessionTimeout = 24 * 60 * 60 * 1000; // 24 hours
-        if ((now - parseInt(loginTime)) < sessionTimeout) {
-          setIsAuthenticated(true);
-        } else {
-          // Session expired, clear data
-          sessionStorage.removeItem('speaksify_authenticated');
-          sessionStorage.removeItem('speaksify_user');
-          sessionStorage.removeItem('speaksify_login_time');
-          setIsAuthenticated(false);
-        }
-      } else {
-        setIsAuthenticated(false);
-      }
-      setIsLoading(false);
-    };
-
-    checkAuth();
-  }, []);
-
   const handleLogin = () => {
+    console.log('handleLogin called, setting authenticated to true');
     setIsAuthenticated(true);
-    setIsLoading(false);
   };
 
   const handleLogout = () => {
@@ -302,24 +285,8 @@ export default function SpeaksifyPaymentsDashboard() {
     setIsAuthenticated(false);
   };
 
-  // Show loading state while checking authentication
-  if (isLoading) {
-    return (
-      <div className="min-h-screen w-full bg-gradient-to-br from-slate-50 via-white to-blue-50/30 flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="text-center"
-        >
-          <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 grid place-items-center text-white font-bold text-2xl shadow-lg mx-auto mb-4">
-            S
-          </div>
-          <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="text-slate-600 mt-4">Loading dashboard...</p>
-        </motion.div>
-      </div>
-    );
-  }
+  // Debug logging
+  console.log('App state:', { isAuthenticated });
 
   if (!isAuthenticated) {
     return <Login onLogin={handleLogin} />;
